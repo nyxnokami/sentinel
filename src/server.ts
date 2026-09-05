@@ -7,6 +7,23 @@ import { startWorker } from './workers/poller';
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+  origin:[
+    "http://localhost:5173",
+    "https://818f51a1.sentinel-dashboard-6kj.pages.dev/"
+  ],
+  methods:['GET','POST','DELETE'],
+  credentials:true,
+  allowedHeaders:['Content-Type','Authorization']
+}));
+
+app.use(express.json());
+
+app.get('/', (req,res) => {
+  res.send('Sentinel API Server is running and connected to Neon Database!');
+});
+
 app.use((req, res, next) =>{
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
